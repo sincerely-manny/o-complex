@@ -22,10 +22,16 @@ const getReviews = () => {
 };
 
 export default async function Reviews() {
-    const reviews = await getReviews();
-    return (
-        <div className="grid grid-cols-1 justify-stretch gap-x-6 gap-y-4 sm:grid-cols-2">
-            {reviews.data?.map((review) => <Review key={review.id} review={review} />)}
-        </div>
-    );
+    try {
+        const reviews = await getReviews();
+        return (
+            <div className="grid grid-cols-1 justify-stretch gap-x-6 gap-y-4 sm:grid-cols-2">
+                {reviews.data?.map((review) => <Review key={review.id} review={review} />)}
+            </div>
+        );
+    } catch (error) {
+        return (
+            <div className="bg-grey-light rounded p-5">❌ {(error as Error)?.message || 'Error fetching reviews'}</div>
+        );
+    }
 }

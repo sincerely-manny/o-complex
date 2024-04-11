@@ -1,0 +1,12 @@
+.review h1 {
+    font-weight: 600;
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin: 0 0 1em;
+}
+
+.review p {
+    font-size: 1em;
+    line-height: 1.5;
+    margin: 0 0 1em;
+}

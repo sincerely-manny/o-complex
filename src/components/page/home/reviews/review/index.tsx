@@ -1,5 +1,6 @@
 /* eslint-disable react/no-danger */
 
+import './style.css';
 import sanitizeHtml from 'sanitize-html';
 
 type ReviewProps = {
@@ -15,7 +16,7 @@ export default function Review({ review: { text } }: ReviewProps) {
     });
     return (
         <div
-            className="bg-secondary rounded-[15px] px-6 py-5"
+            className="bg-grey-light review rounded px-6 py-5"
             dangerouslySetInnerHTML={{
                 __html: escapedText,
             }}
