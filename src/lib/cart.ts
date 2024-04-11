@@ -12,7 +12,10 @@ type CartItem = z.infer<typeof cartItemSchema>;
 
 export const useCart = () => {
     const [cart, setCart] = useState<CartItem[]>(() => {
-        const storedCart = localStorage?.getItem('cart');
+        if (typeof window === 'undefined') {
+            return [];
+        }
+        const storedCart = localStorage.getItem('cart');
         if (storedCart) {
             try {
                 return cartSchema.parse(JSON.parse(storedCart));
@@ -24,6 +27,9 @@ export const useCart = () => {
     });
 
     useEffect(() => {
+        if (typeof window === 'undefined') {
+            return;
+        }
         localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart]);
 
