@@ -1,0 +1,35 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
+import { z } from 'zod';
+import Review from './review';
+
+const reviewSchema = z.object({
+    id: z.number(),
+    text: z.string(),
+});
+
+const reviewsSchema = z.array(reviewSchema);
+
+const getReviews = async () =>
+    fetch('http://o-complex.com:1337/reviews')
+        .then((res) => res.json())
+        .then((data) => {
+            const reviews = reviewsSchema.parse(data);
+            return reviews;
+        })
+        .catch(() => {
+            throw new Error('Error fetching reviews');
+        });
+
+export default function Reviews() {
+    const reviews = useQuery({
+        queryKey: ['reviews'],
+        queryFn: getReviews,
+    });
+    return (
+        <div className="grid grid-cols-1 justify-stretch gap-x-6 gap-y-4 sm:grid-cols-2">
+            {reviews.data?.map((review) => <Review key={review.id} review={review} />)}
+        </div>
+    );
+}
