@@ -25,14 +25,19 @@ export default function Form({ phone }: FormProps) {
     };
     return (
         <form>
-            <Input
-                name="phone"
-                value={phone.value}
-                onChange={handlePhoneChange}
-                onBlur={handlePhoneBlur}
-                placeholder="+7 (___) ___-__-__"
-            />
-            <Button>заказать</Button>
+            <div className="flex  gap-4">
+                <Input
+                    name="phone"
+                    value={phone.value}
+                    onChange={handlePhoneChange}
+                    onBlur={handlePhoneBlur}
+                    placeholder="+7 (___) ___-__-__"
+                    className="w-96"
+                    tabIndex={0}
+                    aria-label="Телефон"
+                />
+                <Button tabIndex={0}>заказать</Button>
+            </div>
         </form>
     );
 }

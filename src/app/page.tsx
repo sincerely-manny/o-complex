@@ -13,7 +13,7 @@ export default function Home() {
                     <Reviews />
                 </Suspense>
             </section>
-            <section>
+            <section className="flex justify-center">
                 <Cart />
             </section>
         </main>
