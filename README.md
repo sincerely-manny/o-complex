@@ -1,3 +1,5 @@
+### 🌍 поднято тут: [https://o-complex.vercel.app]
+
 ✅ визуал по фигме [https://www.figma.com/file/XIYVl8ICFkdl3HJZcc8o8B/тестовое?type=design&node-id=0%3A1&mode=design&t=6xUI2e3VtlUzDocD-1](https://www.figma.com/file/XIYVl8ICFkdl3HJZcc8o8B/%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D0%BE%D0%B5?type=design&node-id=0%3A1&mode=design&t=6xUI2e3VtlUzDocD-1)
 
 ✒️ _позволил себе не делать pizel perfect 🙃_
