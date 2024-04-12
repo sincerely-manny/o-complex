@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { ProductItem } from '..';
+import { type ProductItem } from '@/providers/cart';
 import AddToCartButton from './add-to-cart';
 
 type ProductProps = {
@@ -21,7 +21,7 @@ export default function Product({ data: { id, image_url, description, price, tit
                 {description}
             </p>
             <p className="mb-8 text-center text-4xl">цена: ${price}</p>
-            <AddToCartButton id={id} />
+            <AddToCartButton product={{ id, image_url, description, price, title }} />
         </li>
     );
 }

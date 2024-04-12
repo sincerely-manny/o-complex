@@ -4,20 +4,30 @@ import { createContext, useContext, useEffect, useMemo, useState, type Dispatch,
 
 import { z } from 'zod';
 
-const cartItemSchema = z.object({
+export const ProductSchema = z.object({
     id: z.number(),
-    quantity: z.number(),
+    image_url: z.string(),
+    title: z.string(),
+    description: z.string(),
+    price: z.number(),
 });
 
-const cartSchema = z.array(cartItemSchema);
+export type ProductItem = z.infer<typeof ProductSchema>;
 
-export type CartItem = z.infer<typeof cartItemSchema>;
+const CartItemSchema = z.object({
+    quantity: z.number(),
+    item: ProductSchema,
+});
+
+export type CartItem = z.infer<typeof CartItemSchema>;
+
+const CartSchema = z.array(CartItemSchema);
 
 const storedCart = localStorage.getItem('cart');
 let initialCart: CartItem[] = [];
 if (storedCart) {
     try {
-        initialCart = cartSchema.parse(JSON.parse(storedCart));
+        initialCart = CartSchema.parse(JSON.parse(storedCart));
     } catch (_error) {
         localStorage.removeItem('cart');
     }
@@ -48,11 +58,14 @@ export const useCart = () => {
     };
 
     const removeFromCart = (id: number) => {
-        set(cart.filter((item) => item.id !== id));
+        set(cart.filter((item) => item.item.id !== id));
     };
 
-    const setItemQantity = (id: CartItem['id'], cb: (prevQnty: CartItem['quantity']) => CartItem['quantity']) => {
-        const prevItemIndex = cart.findIndex((i) => i.id === id);
+    const setItemQantity = (
+        id: CartItem['item']['id'],
+        cb: (prevQnty: CartItem['quantity']) => CartItem['quantity'],
+    ) => {
+        const prevItemIndex = cart.findIndex((i) => i.item.id === id);
         if (prevItemIndex === -1) {
             return;
         }
@@ -66,7 +79,7 @@ export const useCart = () => {
         set(cart);
     };
 
-    const item = (id: number) => cart.find((i) => i.id === id);
+    const item = (id: number) => cart.find((i) => i?.item?.id === id);
 
     return { cart, addToCart, removeFromCart, setItemQantity, item };
 };

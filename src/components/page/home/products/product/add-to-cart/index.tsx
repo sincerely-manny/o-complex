@@ -1,16 +1,27 @@
 'use client';
 
 import Button from '@/components/ui/button';
-import { useCart } from '@/providers/cart';
+import { type ProductItem, useCart } from '@/providers/cart';
 
 type AddToCartButtonProps = {
-    id: number;
+    product: ProductItem;
 };
 
-export default function AddToCartButton({ id }: AddToCartButtonProps) {
+export default function AddToCartButton({ product }: AddToCartButtonProps) {
     const { item, setItemQantity, addToCart } = useCart();
-    const quantity = item(id) ?? 0;
+    const quantity = item(product.id)?.quantity ?? 0;
     if (quantity === 0) {
-        return <Button onClick={() => addToCart({ id, quantity: 1 })}>купить</Button>;
+        return (
+            <Button
+                onClick={() =>
+                    addToCart({
+                        quantity: 1,
+                        item: product,
+                    })
+                }
+            >
+                купить
+            </Button>
+        );
     }
 }

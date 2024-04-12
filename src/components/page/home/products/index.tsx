@@ -1,19 +1,9 @@
 'use client';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
-import Image from 'next/image';
 import { z } from 'zod';
+import { ProductSchema } from '@/providers/cart';
 import Product from './product';
-
-const ProductSchema = z.object({
-    id: z.number(),
-    image_url: z.string(),
-    title: z.string(),
-    description: z.string(),
-    price: z.number(),
-});
-
-export type ProductItem = z.infer<typeof ProductSchema>;
 
 const ApiResponseSchema = z.object({
     page: z.number(),

@@ -14,8 +14,10 @@ export default function Cart() {
             <ul className="my-5">
                 {cart.length ? (
                     cart.map((item) => (
-                        <li key={item.id}>
-                            <span>{item.quantity}</span>
+                        <li key={item.item.id}>
+                            <span>
+                                {item.item.title} {item.quantity}
+                            </span>
                         </li>
                     ))
                 ) : (
