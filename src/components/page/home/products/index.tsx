@@ -18,7 +18,9 @@ export type ApiResponse = z.infer<typeof ApiResponseSchema>;
 const itemsPerPage = 6;
 
 async function fetchProducts({ pageParam }: { pageParam: number }) {
-    const res = await fetch(`http://o-complex.com:1337/products?page=${pageParam}&page_size=${itemsPerPage}`);
+    const res = await fetch(`http://o-complex.com:1337/products?page=${pageParam}&page_size=${itemsPerPage}/`, {
+        mode: 'cors',
+    });
     const json = (await res.json()) as unknown;
     const result = ApiResponseSchema.parse(json);
     return result;

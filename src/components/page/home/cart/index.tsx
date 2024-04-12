@@ -27,8 +27,9 @@ type OrderResponse =
 const phoneSchema = z.string().regex(phoneNumberRegex);
 
 const sendOrder = async (data: Order): Promise<OrderResponse> => {
-    const response = await fetch('http://o-complex.com:1337/order', {
+    const response = await fetch('http://o-complex.com:1337/order/', {
         method: 'POST',
+        mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
         },

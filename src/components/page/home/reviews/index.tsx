@@ -9,7 +9,7 @@ const reviewSchema = z.object({
 const reviewsSchema = z.array(reviewSchema);
 
 const getReviews = () => {
-    const r = fetch('http://o-complex.com:1337/reviews')
+    const r = fetch('http://o-complex.com:1337/reviews/')
         .then((res) => res.json())
         .then((data) => {
             const reviews = reviewsSchema.parse(data);
@@ -31,7 +31,7 @@ export default async function Reviews() {
         );
     } catch (error) {
         return (
-            <div className="bg-grey-light rounded p-5">❌ {(error as Error)?.message || 'Error fetching reviews'}</div>
+            <div className="rounded bg-grey-light p-5">❌ {(error as Error)?.message || 'Error fetching reviews'}</div>
         );
     }
 }
