@@ -106,5 +106,9 @@ export const useCart = () => {
 
     const item = (id: number) => cart.find((i) => i?.item?.id === id);
 
-    return { cart, addToCart, removeFromCart, setItemQantity, item };
+    const emptyCart = () => {
+        set([]);
+    };
+
+    return { cart, addToCart, removeFromCart, setItemQantity, item, emptyCart };
 };

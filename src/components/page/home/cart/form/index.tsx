@@ -1,7 +1,13 @@
 import Button from '@/components/ui/button';
 import Input from '@/components/ui/input';
 import { formatPhoneNumber } from '@/lib/phone';
-import { type Dispatch, type SetStateAction, type ChangeEventHandler, type FocusEventHandler } from 'react';
+import {
+    type Dispatch,
+    type SetStateAction,
+    type ChangeEventHandler,
+    type FocusEventHandler,
+    type HTMLProps,
+} from 'react';
 import { twMerge } from 'tailwind-merge';
 
 type FormProps = {
@@ -9,10 +15,9 @@ type FormProps = {
         value: string;
         set: Dispatch<SetStateAction<string>>;
     };
-    className?: string;
-};
+} & HTMLProps<HTMLFormElement>;
 
-export default function Form({ phone, className = '' }: FormProps) {
+export default function Form({ phone, className = '', onSubmit }: FormProps) {
     const handlePhoneChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         const { value } = e.target;
         phone.set(value.replaceAll(/[^-\d +()]/g, ''));
@@ -27,7 +32,7 @@ export default function Form({ phone, className = '' }: FormProps) {
     };
 
     return (
-        <form className={twMerge(className)}>
+        <form className={twMerge(className)} onSubmit={onSubmit}>
             <div className="flex w-full flex-wrap items-stretch justify-stretch gap-4">
                 <Input
                     name="phone"
@@ -39,7 +44,7 @@ export default function Form({ phone, className = '' }: FormProps) {
                     tabIndex={0}
                     aria-label="Телефон"
                 />
-                <Button tabIndex={0} className="grow px-0">
+                <Button type="submit" tabIndex={0} className="grow px-0">
                     заказать
                 </Button>
             </div>
