@@ -9,7 +9,7 @@ const reviewSchema = z.object({
 const reviewsSchema = z.array(reviewSchema);
 
 const getReviews = () => {
-    const r = fetch('http://o-complex.com:1337/reviews/')
+    const r = fetch('http://o-complex.com:1337/reviews')
         .then((res) => res.json())
         .then((data) => {
             const reviews = reviewsSchema.parse(data);

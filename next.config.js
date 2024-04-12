@@ -20,6 +20,15 @@ const config = {
             },
         ],
     },
+    // eslint-disable-next-line @typescript-eslint/require-await
+    async rewrites() {
+        return [
+            {
+                source: '/api/:path*',
+                destination: `http://o-complex.com:1337/:path*`,
+            },
+        ];
+    },
 };
 
 export default config;
