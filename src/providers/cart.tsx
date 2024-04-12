@@ -23,7 +23,12 @@ export type CartItem = z.infer<typeof CartItemSchema>;
 
 const CartSchema = z.array(CartItemSchema);
 
-const storedCart = localStorage.getItem('cart');
+let storedCart = '';
+
+if (typeof localStorage !== 'undefined') {
+    storedCart = localStorage.getItem('cart') ?? '';
+}
+
 let initialCart: CartItem[] = [];
 if (storedCart) {
     try {
