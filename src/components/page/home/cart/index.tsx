@@ -56,6 +56,7 @@ export default function Cart() {
 
     useEffect(() => {
         setError(null);
+        setOrderIsSuccess(false);
     }, [cart, phone]);
 
     useEffect(() => {
