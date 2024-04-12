@@ -10,6 +10,16 @@ const config = {
     experimental: {
         // swcPlugins: [['next-superjson-plugin', {}]],
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**.gstatic.com',
+                port: '',
+                pathname: '/**',
+            },
+        ],
+    },
 };
 
 export default config;

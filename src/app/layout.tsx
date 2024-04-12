@@ -1,3 +1,4 @@
+import { CartProvider } from '@/providers/cart';
 import ReactQueryClientProvider from '@/providers/queryclient';
 import '@/styles/globals.css';
 
@@ -15,9 +16,11 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <ReactQueryClientProvider>
-            <html lang="ru">
-                <body className={`bg-primary p-6 font-sans text-2xl text-black ${inter.variable}`}>{children}</body>
-            </html>
+            <CartProvider>
+                <html lang="ru">
+                    <body className={`bg-primary p-6 font-sans text-2xl text-black ${inter.variable}`}>{children}</body>
+                </html>
+            </CartProvider>
         </ReactQueryClientProvider>
     );
 }

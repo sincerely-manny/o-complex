@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useCart } from '@/lib/cart';
+import { useCart } from '@/providers/cart';
 import Form from './form';
 
 export default function Cart() {
@@ -9,9 +9,9 @@ export default function Cart() {
     const { cart } = useCart();
 
     return (
-        <div className="bg-grey-light max-w-min rounded p-3">
+        <div className="w-full rounded bg-grey-light p-3 sm:w-[710px]">
             <h3 className="text-4xl">Добавленные товары</h3>
-            <ul>
+            <ul className="my-5">
                 {cart.length ? (
                     cart.map((item) => (
                         <li key={item.id}>
@@ -19,7 +19,7 @@ export default function Cart() {
                         </li>
                     ))
                 ) : (
-                    <li>Корзина пуста</li>
+                    <li className="italic">Корзина пуста</li>
                 )}
             </ul>
             <Form
