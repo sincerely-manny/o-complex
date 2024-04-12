@@ -9,7 +9,7 @@ export default function Button({ children, disabled, onClick, type = 'button', c
     return (
         <button
             className={twMerge(
-                'bg-primary inline-block max-w-full rounded px-14 py-3 text-center text-4xl text-white transition-colors hover:bg-black',
+                'inline-block max-w-full rounded bg-primary px-14 py-[0.875rem] text-center text-4xl text-white transition-colors hover:bg-black',
                 className,
             )}
             type={type === 'submit' ? 'submit' : 'button'}

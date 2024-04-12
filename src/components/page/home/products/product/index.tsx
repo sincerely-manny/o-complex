@@ -17,10 +17,10 @@ export default function Product({ data: { id, image_url, description, price, tit
                 className="aspect-[280/370] w-full rounded object-cover"
             />
             <h3 className="truncate text-4xl">{title}</h3>
-            <p className="line-clamp-[15] grow hyphens-auto" lang="en">
+            <p className="line-clamp-[9]  h-[9em] grow overflow-hidden hyphens-auto leading-[1em]" lang="en">
                 {description}
             </p>
-            <p className="mb-8 text-center text-4xl">цена: ${price}</p>
+            <p className="mb-8 text-nowrap text-center text-4xl">цена: {price}₽</p>
             <AddToCartButton product={{ id, image_url, description, price, title }} />
         </li>
     );

@@ -46,7 +46,7 @@ export default function Products() {
     return (
         <div>
             {productsQuery.data?.pages.map((page) => (
-                <ul key={page.page} className="grid grid-cols-3 gap-x-9 gap-y-10">
+                <ul key={page.page} className="grid grid-cols-1 gap-x-9 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
                     {page.products.map((item) => (
                         <Product key={item.id} data={item} />
                     ))}

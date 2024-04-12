@@ -67,7 +67,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 initialCart = CartSchema.parse(JSON.parse(storedCart));
                 setCart(initialCart);
             } catch (_error) {
-                // localStorage.removeItem('cart');
+                localStorage.removeItem('cart');
             }
         }
         setCartInitialized(true);
@@ -90,7 +90,8 @@ export const useCart = () => {
     };
 
     const removeFromCart = (id: number) => {
-        set(cart.filter((item) => item.item.id !== id));
+        const newCart = cart.filter((i) => i.item.id !== id);
+        set([...newCart]);
     };
 
     const setItemQantity = (
@@ -105,10 +106,11 @@ export const useCart = () => {
         const newQnty = cb(prevItem.quantity);
         if (newQnty <= 0) {
             removeFromCart(id);
+            return;
         }
         const newItem = { ...prevItem, quantity: newQnty };
         cart[prevItemIndex] = newItem;
-        set(cart);
+        set([...cart]);
     };
 
     const item = (id: number) => cart.find((i) => i?.item?.id === id);
