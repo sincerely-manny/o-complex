@@ -1,6 +1,15 @@
 'use client';
 
-import { createContext, useContext, useEffect, useMemo, useState, type Dispatch, type SetStateAction } from 'react';
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+    type Dispatch,
+    type SetStateAction,
+} from 'react';
 
 import { z } from 'zod';
 
@@ -23,34 +32,52 @@ export type CartItem = z.infer<typeof CartItemSchema>;
 
 const CartSchema = z.array(CartItemSchema);
 
-let storedCart = '';
+// let storedCart = '';
 
-if (typeof localStorage !== 'undefined') {
-    storedCart = localStorage.getItem('cart') ?? '';
-}
+// if (typeof localStorage !== 'undefined') {
+//     storedCart = localStorage.getItem('cart') ?? '';
+// }
 
-let initialCart: CartItem[] = [];
-if (storedCart) {
-    try {
-        initialCart = CartSchema.parse(JSON.parse(storedCart));
-    } catch (_error) {
-        localStorage.removeItem('cart');
-    }
-}
+// let initialCart: CartItem[] = [];
+// if (storedCart) {
+//     try {
+//         initialCart = CartSchema.parse(JSON.parse(storedCart));
+//     } catch (_error) {
+//         localStorage.removeItem('cart');
+//     }
+// }
 
 export const cartContext = createContext<{
     items: CartItem[];
     set: Dispatch<SetStateAction<CartItem[]>>;
 }>({
-    items: initialCart,
+    items: [],
     set: () => {},
 });
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-    const [cart, setCart] = useState<CartItem[]>(initialCart);
+    const [cart, setCart] = useState<CartItem[]>([]);
+    const [cartInitialized, setCartInitialized] = useState(false);
+
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart]);
+        const storedCart = localStorage.getItem('cart') ?? '';
+        let initialCart: CartItem[] = [];
+        if (storedCart) {
+            try {
+                initialCart = CartSchema.parse(JSON.parse(storedCart));
+                setCart(initialCart);
+            } catch (_error) {
+                // localStorage.removeItem('cart');
+            }
+        }
+        setCartInitialized(true);
+    }, []);
+
+    useEffect(() => {
+        if (cartInitialized) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+    }, [cart, cartInitialized]);
     const value = useMemo(() => ({ items: cart, set: setCart }), [cart]);
     return <cartContext.Provider value={value}>{children}</cartContext.Provider>;
 }
