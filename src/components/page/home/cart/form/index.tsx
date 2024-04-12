@@ -1,7 +1,7 @@
 import Button from '@/components/ui/button';
 import Input from '@/components/ui/input';
 import { formatPhoneNumber } from '@/lib/phone';
-import type { Dispatch, SetStateAction, ChangeEventHandler, FocusEventHandler } from 'react';
+import { type Dispatch, type SetStateAction, type ChangeEventHandler, type FocusEventHandler } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 type FormProps = {
@@ -25,6 +25,7 @@ export default function Form({ phone, className = '' }: FormProps) {
         }
         phone.set(formatted);
     };
+
     return (
         <form className={twMerge(className)}>
             <div className="flex w-full flex-wrap items-stretch justify-stretch gap-4">

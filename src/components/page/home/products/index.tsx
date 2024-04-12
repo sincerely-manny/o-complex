@@ -1,8 +1,9 @@
 'use client';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { z } from 'zod';
 import { ProductSchema } from '@/providers/cart';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { Fragment, useEffect } from 'react';
+import { z } from 'zod';
 import Product from './product';
 
 const ApiResponseSchema = z.object({
@@ -14,7 +15,7 @@ const ApiResponseSchema = z.object({
 
 export type ApiResponse = z.infer<typeof ApiResponseSchema>;
 
-const itemsPerPage = 20;
+const itemsPerPage = 6;
 
 async function fetchProducts({ pageParam }: { pageParam: number }) {
     const res = await fetch(`http://o-complex.com:1337/products?page=${pageParam}&page_size=${itemsPerPage}`);
@@ -36,6 +37,16 @@ export default function Products() {
         },
     });
 
+    useEffect(() => {
+        const loadMoreOnScroll = () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+                productsQuery.fetchNextPage().catch(() => {});
+            }
+        };
+        window.addEventListener('scroll', loadMoreOnScroll);
+        return () => window.removeEventListener('scroll', loadMoreOnScroll);
+    }, [productsQuery]);
+
     if (productsQuery.isLoading) {
         return <div className="text-white">Loading products...</div>;
     }
@@ -44,15 +55,17 @@ export default function Products() {
     }
 
     return (
-        <div>
-            {productsQuery.data?.pages.map((page) => (
-                <ul key={page.page} className="grid grid-cols-1 gap-x-9 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-                    {page.products.map((item) => (
-                        <Product key={item.id} data={item} />
-                    ))}
-                </ul>
-            ))}
-            {productsQuery.hasNextPage && <button onClick={() => productsQuery.fetchNextPage()}>Load more</button>}
-        </div>
+        <>
+            <ul className="grid grid-cols-1 gap-x-9 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                {productsQuery.data?.pages.map((page) => (
+                    <Fragment key={page.page}>
+                        {page.products.map((item) => (
+                            <Product key={item.id} data={item} />
+                        ))}
+                    </Fragment>
+                ))}
+            </ul>
+            {productsQuery.isFetchingNextPage && <div className="my-10 text-white">Loading more products...</div>}
+        </>
     );
 }

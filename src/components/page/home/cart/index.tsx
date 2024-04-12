@@ -1,12 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { formatPhoneNumber } from '@/lib/phone';
 import { useCart } from '@/providers/cart';
+import { useEffect, useState } from 'react';
 import Form from './form';
 
 export default function Cart() {
     const [phone, setPhone] = useState('');
     const { cart } = useCart();
+
+    useEffect(() => {
+        const storedPhone = localStorage.getItem('form-phone');
+        if (storedPhone) {
+            let formatted = formatPhoneNumber(storedPhone);
+            if (formatted.length > 18) {
+                formatted = formatted.slice(0, 18);
+            }
+            setPhone(formatPhoneNumber(formatted));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('form-phone', phone);
+    }, [phone]);
 
     return (
         <div className="w-full rounded bg-grey-light p-3 sm:w-[710px]">
