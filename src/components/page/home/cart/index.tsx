@@ -4,8 +4,8 @@ import { formatPhoneNumber, phoneNumberRegex } from '@/lib/phone';
 import { useCart } from '@/providers/cart';
 import { useMutation } from '@tanstack/react-query';
 import { Fragment, useEffect, useState, type FormEventHandler } from 'react';
-import Form from './form';
 import { z } from 'zod';
+import Form from './form';
 
 type Order = {
     phone: string;
